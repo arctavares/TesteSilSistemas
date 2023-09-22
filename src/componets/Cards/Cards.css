@@ -67,6 +67,10 @@
     align-items: center;
 }
 
+.numberOfCases {
+    margin-left: 30px;
+}
+
 @media (max-width: 833px){
     .cardsContainer {
         flex-direction: column;

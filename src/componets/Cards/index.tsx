@@ -102,13 +102,13 @@ export default function Cards() {
                 {loading ? 'Loading...' : (
                     <>
                     <div className="selectRegion">
-                        <h1 className="confirmedCasesTitle">Confirmed cases</h1>
+                        <h2 className="confirmedCasesTitle">Confirmed cases</h2>
                         <select onChange={handleUfCHange} value={state}>
                             {returnAllUF()}
                         </select>
                 </div>
                 <div className="numberOfCases">
-                    <h1>{covidData.cases}</h1>
+                    <h2>{covidData.cases}</h2>
                 </div>
                 </>
                 )}
@@ -120,7 +120,7 @@ export default function Cards() {
             {loading ? 'Loading...' : (
                     <>
                     <div className="selectRegion">
-                    <h1>Top posts</h1>
+                    <h2>Top posts</h2>
                     <select onChange={handleContryChange} value={country}>
                         <option value='BR'>BR</option>
                         <option value='US'>US</option>
