@@ -4,7 +4,7 @@ import axios from 'axios';
 
 export default function Cards() {
 
-    const [covidData, setCovidData] = useState('');
+    const [covidData, setCovidData] = useState({cases: 0});
     const [loading, setLoading] = useState(true);
     const [state, setState] = useState('RJ');
 
@@ -81,7 +81,9 @@ export default function Cards() {
                 </div>
                 </>
                 )}
-                
+                <div className="infoAboutCases">
+                    <a href="https://www.cdc.gov/coronavirus/2019-ncov/prevent-getting-sick/prevention.html#:~:text=In%20those%20situations%2C%20use%20as,sick%20or%20who%20tested%20positive.">Learn how to prevent infections</a>
+                </div>
             </div>
             <div className="newsContainer card">
                 news

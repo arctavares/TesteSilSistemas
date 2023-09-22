@@ -1,5 +1,4 @@
 .cardsContainer {
-
     height: 20vh;
     margin-top: -5vh;
     display: flex;
@@ -25,4 +24,9 @@
 
 .numberOfCases {
     margin-left: 4vw;
+}
+
+.infoAboutCases {
+    margin-top: 20px;
+    text-align: center;
 }
