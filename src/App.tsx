@@ -1,12 +1,13 @@
-import { useState } from 'react'
+import Header from './componets/Header';
 import './App.css'
-
+import Cards from './componets/Cards';
 
 function App() {
 
   return (
-    <div className='bodyContainer'>
-    <Header>
+    <div className='main'>
+       <Header />
+       <Cards />
     </div>
   )
 }

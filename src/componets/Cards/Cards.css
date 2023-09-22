@@ -1,0 +1,17 @@
+.cardsContainer {
+    border: 1px solid black;
+    height: 20vh;
+    margin-top: -5vh;
+    display: flex;
+    justify-content: space-around;
+}
+
+.covidInfoContainer {
+    border: 1px solid red;
+    width: 25vw;
+}
+
+.card {
+    border: 1px solid red;
+    width: 25vw;
+}
