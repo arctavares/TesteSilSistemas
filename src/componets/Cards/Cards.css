@@ -1,5 +1,4 @@
 .cardsContainer {
-    height: 25vh;
     margin-top: -5vh;
     display: flex;
     justify-content: space-around;
@@ -10,10 +9,12 @@
 }
 
 .card {
-    width: 25vw;
+    width: 30vw;
+    height: 30vh;
     background-color: rgb(241, 241, 241);
     border-radius: 20px;
     box-shadow: 5px 5px 20px;
+    overflow: hidden;
 }
 
 .selectRegion {
@@ -51,4 +52,19 @@
 
 .highlight {
     color: rgb(6, 214, 6);
+}
+
+@media (max-width: 833px){
+    .cardsContainer {
+        flex-direction: column;
+        align-items: center;
+        height: 100vh;
+        
+    }
+    .card {
+        margin-top: 20px;
+        height: 50vh !important;
+        width: 50vw;
+        min-width: 337px !important;
+    }
 }
