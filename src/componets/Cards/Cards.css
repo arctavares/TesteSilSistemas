@@ -54,6 +54,19 @@
     color: rgb(6, 214, 6);
 }
 
+.selectRegion {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.confirmedCasesTitle {
+    height: 5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 @media (max-width: 833px){
     .cardsContainer {
         flex-direction: column;
