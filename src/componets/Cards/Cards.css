@@ -1,5 +1,5 @@
 .cardsContainer {
-    border: 1px solid black;
+
     height: 20vh;
     margin-top: -5vh;
     display: flex;
@@ -7,11 +7,22 @@
 }
 
 .covidInfoContainer {
-    border: 1px solid red;
     width: 25vw;
 }
 
 .card {
-    border: 1px solid red;
     width: 25vw;
+    background-color: rgb(241, 241, 241);
+    border-radius: 20px;
+    box-shadow: 5px 5px 20px;
+}
+
+.selectRegion {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 2vh;
+}
+
+.numberOfCases {
+    margin-left: 4vw;
 }
