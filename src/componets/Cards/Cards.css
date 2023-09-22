@@ -1,5 +1,5 @@
 .cardsContainer {
-    height: 20vh;
+    height: 25vh;
     margin-top: -5vh;
     display: flex;
     justify-content: space-around;
@@ -27,6 +27,28 @@
 }
 
 .infoAboutCases {
-    margin-top: 20px;
+    margin-top: 30px;
     text-align: center;
+}
+
+.newsContainer li {
+    margin: 5px;    
+}
+
+.contact {
+    text-align: center;
+}
+
+.reviewContainer {
+    background-color: rgb(8, 8, 109);
+    color: white;
+}
+
+.reviewContainer h1, p{
+    text-align: center;
+    margin-top: 20px
+}
+
+.highlight {
+    color: rgb(6, 214, 6);
 }

@@ -7,6 +7,12 @@ export default function Cards() {
     const [covidData, setCovidData] = useState({cases: 0});
     const [loading, setLoading] = useState(true);
     const [state, setState] = useState('RJ');
+    const [country, setCountry] = useState('BR');
+    const [newsData, setNewsData] = useState({articles: []});
+
+    const NEWS_API_KEY = '59f7bcd85f2c4ff7a912594ae830d2a2'; 
+    // a key ficará aqui para que todos possam acessar
+    const NEWS_URL = (country : string) => `https://newsapi.org/v2/top-headlines?country=${country}&category=business&apiKey=${NEWS_API_KEY}`
 
     const allUF = [
             'AC',
@@ -44,7 +50,7 @@ export default function Cards() {
         })
     }
 
-    function handleChange (e:any) {
+    function handleUfCHange (e:any) {
         setState(e.target.value);
         setLoading(true);
         axios.get(`https://covid19-brazil-api.now.sh/api/report/v1/brazil/uf/${e.target.value}`)
@@ -55,12 +61,37 @@ export default function Cards() {
             .then(() => setLoading(false))
     }
 
+    function handleContryChange(e:any) {
+        setCountry(e.target.value);
+        setLoading(true);
+        axios.get(NEWS_URL(e.target.value))
+            .then((res) => {
+                const data = res.data;
+                setNewsData(data)
+            })
+            .then(() => setLoading(false))
+    }
+
+    function returnNews () {
+        const {articles} = newsData;
+        return articles.slice(0,3).map((news:any) => {
+            return (<li><a href={news.url}>{news.title}</a></li>)
+        }
+        )
+
+    }
+
     useEffect(() => {
         setLoading(true);
         axios.get(`https://covid19-brazil-api.now.sh/api/report/v1/brazil/uf/${state}`)
             .then((res) => {
                 const data = res.data;
                 setCovidData(data);
+            })
+        axios.get(NEWS_URL(country))
+            .then((res) => {
+                const data = res.data;
+                setNewsData(data)
             })
             .then(() => setLoading(false))
     },[])
@@ -72,7 +103,7 @@ export default function Cards() {
                     <>
                     <div className="selectRegion">
                     <p>Confirmed cases</p>
-                    <select onChange={handleChange} value={state}>
+                    <select onChange={handleUfCHange} value={state}>
                         {returnAllUF()}
                     </select>
                 </div>
@@ -86,10 +117,30 @@ export default function Cards() {
                 </div>
             </div>
             <div className="newsContainer card">
-                news
+            {loading ? 'Loading...' : (
+                    <>
+                    <div className="selectRegion">
+                    <p>Top posts</p>
+                    <select onChange={handleContryChange} value={country}>
+                        <option value='BR'>BR</option>
+                        <option value='US'>US</option>
+                    </select>
+                </div>
+                <div className="numberOfCases">
+                    <ul>
+                        {returnNews()}
+                    </ul>   
+                </div>
+                </>
+                )}
+                <div className="contact">
+                   <p>Do you want more visits? Contact us!</p>
+                </div>
             </div>
             <div className="reviewContainer card">
-                review
+                <h1>Trustpilot</h1>
+                <p>Show us your love by leaving a <span className="highlight">positive</span> review on trust pilot and recieve the extension of 50 additional products</p>
+                <p><span className="highlight">Write a review on Trustpilot</span></p>
             </div>
         </div>
     )
