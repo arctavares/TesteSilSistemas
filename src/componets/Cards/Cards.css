@@ -1,7 +1,7 @@
 .cardsContainer {
     margin-top: -5vh;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-around;                                                                                                                                                          
 }
 
 .covidInfoContainer {
@@ -12,8 +12,8 @@
     width: 30vw;
     height: 30vh;
     background-color: rgb(241, 241, 241);
-    border-radius: 20px;
-    box-shadow: 5px 5px 20px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 30px rgb(68, 66, 66);
     overflow: hidden;
 }
 
@@ -24,7 +24,7 @@
 }
 
 .numberOfCases {
-    margin-left: 4vw;
+    text-align: center;
 }
 
 .infoAboutCases {
@@ -68,7 +68,39 @@
 }
 
 .numberOfCases {
-    margin-left: 30px;
+    height: 15vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.numberOfNews {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    height: 15vh;
+    overflow: scroll;
+}
+
+.numberOfNews ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 20px;
+  }
+
+
+.numberOfInfecteds {
+    font-size: 5vh;
+}
+
+.newsContainer {
+    border: 1px solid black;
+}
+
+.reviewText {
+    height: 15vh;
 }
 
 @media (max-width: 833px){
