@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import "./Cards.css";
-import axios from 'axios';
 import loadingSpinner from '../../icons/1494.gif';
 import getCovidData from "../../services/getCovidInfo";
+import getNewsInfo from "../../services/getNewsInfo";
 
 export default function Cards() {
 
@@ -15,9 +15,6 @@ export default function Cards() {
     const [covidError, setCovidError] = useState(false);
     const [newsError, setNewsError] = useState(false);
 
-    const NEWS_API_KEY = '59f7bcd85f2c4ff7a912594ae830d2a2'; 
-    // a key ficará aqui para que todos possam acessar
-    const NEWS_URL = (country : string) => `https://newsapi.org/v2/top-headlines?country=${country}&category=business&apiKey=${NEWS_API_KEY}`
 
     type newsType = {
         url: string,
@@ -69,12 +66,7 @@ export default function Cards() {
     function handleContryChange(e:React.ChangeEvent<HTMLSelectElement>) {
         setCountry(e.target.value);
         setNewsLoading(true);
-        axios.get(NEWS_URL(e.target.value))
-            .then((res) => {
-                const data = res.data;
-                setNewsData(data)
-            })
-            .then(() => setNewsLoading(false))
+        getNewsInfo(country, setNewsData, setNewsLoading, setNewsError);
     }
 
     function returnNews () {
@@ -93,31 +85,13 @@ export default function Cards() {
 
     function handleNewsReload () {
         setNewsLoading(true)
-        axios.get(NEWS_URL(country))
-            .then((res) => {
-                const data = res.data;
-                setNewsData(data);
-                setNewsError(false);
-                setNewsLoading(false)
-            })
-            .catch(() => setNewsError(true))
+        getCovidData(state, setCovidData, setCovidError, setCovidLoading)
     }
 
     useEffect(() => {
         setCovidLoading(true);
         getCovidData(state,setCovidData, setCovidError, setCovidLoading)
-        
-            axios.get(NEWS_URL(country))
-            .then((res) => {
-                const data = res.data;
-                setNewsData(data)
-                setNewsLoading(false);
-            })
-            .catch(() => {
-                setNewsLoading(false)
-                setNewsError(true)
-            })
-        
+        getNewsInfo(country, setNewsData, setNewsLoading, setNewsError);
     },[])
 
     return (
