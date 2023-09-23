@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./Cards.css";
 import axios from 'axios';
 import loadingSpinner from '../../icons/1494.gif';
+import getCovidData from "../../services/getCovidInfo";
 
 export default function Cards() {
 
@@ -62,13 +63,7 @@ export default function Cards() {
     function handleUfCHange (e:React.ChangeEvent<HTMLSelectElement>) {
         setState(e.target.value);
         setCovidLoading(true);
-        axios.get(`https://covid19-brazil-api.now.sh/api/report/v1/brazil/uf/${e.target.value}`)
-            .then((res) => {
-                const data = res.data;
-                setCovidData(data);
-            })
-            .catch(() => setCovidError(true))
-            .then(() => setCovidLoading(false))
+        getCovidData(e.target.value, setCovidData, setCovidError, setCovidLoading)
     }
 
     function handleContryChange(e:React.ChangeEvent<HTMLSelectElement>) {
@@ -93,14 +88,7 @@ export default function Cards() {
 
     function handleCovidReload () {
         setCovidLoading(true)
-        axios.get(`https://covid19-brazil-api.now.sh/api/report/v1/brazil/uf/${state}`)
-            .then((res) => {
-                const data = res.data;
-                setCovidData(data);
-                setCovidError(false);
-                setCovidLoading(false)
-            })
-            .catch(() => setCovidError(true))
+        getCovidData(state, setCovidData, setCovidError, setCovidLoading)
     }
 
     function handleNewsReload () {
@@ -117,15 +105,7 @@ export default function Cards() {
 
     useEffect(() => {
         setCovidLoading(true);
-        axios.get(`https://covid19-brazil-api.now.sh/api/report/v1/brazil/uf/${state}`)
-            .then((res) => {
-                const data = res.data;
-                setCovidData(data);
-                setCovidLoading(false);
-            })
-            .catch(() => {
-                setCovidLoading(false)
-                setCovidError(true)}    )
+        getCovidData(state,setCovidData, setCovidError, setCovidLoading)
         
             axios.get(NEWS_URL(country))
             .then((res) => {
