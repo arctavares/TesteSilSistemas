@@ -75,9 +75,7 @@
 }
 
 .numberOfNews {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: block;
     padding: 20px;
     height: 15vh;
     overflow: scroll;
