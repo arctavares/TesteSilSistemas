@@ -51,7 +51,7 @@ export default function Cards() {
 
     function returnAllUF () {
         return allUF.map(uf => {
-            return <option>{uf}</option>
+            return <option key={uf}>{uf}</option>
         })
     }
 
@@ -80,7 +80,7 @@ export default function Cards() {
     function returnNews () {
         const {articles} = newsData;
         return articles.map((news:newsType) => {
-            return (<li><a href={news.url}>{news.title}</a></li>)
+            return (<li key={news.title}><a href={news.url}>{news.title}</a></li>)
         }
         )
 
