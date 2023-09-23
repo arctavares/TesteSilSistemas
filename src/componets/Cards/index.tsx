@@ -1,15 +1,18 @@
 import { useEffect, useState } from "react";
 import "./Cards.css";
 import axios from 'axios';
+import loadingSpinner from '../../icons/1494.gif';
 
 export default function Cards() {
 
     const [covidData, setCovidData] = useState({cases: 0});
-    const [loading, setLoading] = useState(true);
+    const [covidLoading, setCovidLoading] = useState(true);
+    const [newsLoading, setNewsLoading] = useState(true);
     const [state, setState] = useState('RJ');
     const [country, setCountry] = useState('BR');
     const [newsData, setNewsData] = useState({articles: []});
     const [covidError, setCovidError] = useState(false);
+    const [newsError, setNewsError] = useState(false);
 
     const NEWS_API_KEY = '59f7bcd85f2c4ff7a912594ae830d2a2'; 
     // a key ficará aqui para que todos possam acessar
@@ -58,25 +61,25 @@ export default function Cards() {
 
     function handleUfCHange (e:React.ChangeEvent<HTMLSelectElement>) {
         setState(e.target.value);
-        setLoading(true);
+        setCovidLoading(true);
         axios.get(`https://covid19-brazil-api.now.sh/api/report/v1/brazil/uf/${e.target.value}`)
             .then((res) => {
                 const data = res.data;
                 setCovidData(data);
             })
             .catch(() => setCovidError(true))
-            .then(() => setLoading(false))
+            .then(() => setCovidLoading(false))
     }
 
     function handleContryChange(e:React.ChangeEvent<HTMLSelectElement>) {
         setCountry(e.target.value);
-        setLoading(true);
+        setNewsLoading(true);
         axios.get(NEWS_URL(e.target.value))
             .then((res) => {
                 const data = res.data;
                 setNewsData(data)
             })
-            .then(() => setLoading(false))
+            .then(() => setNewsLoading(false))
     }
 
     function returnNews () {
@@ -89,38 +92,59 @@ export default function Cards() {
     }
 
     function handleCovidReload () {
-        setLoading(true)
+        setCovidLoading(true)
         axios.get(`https://covid19-brazil-api.now.sh/api/report/v1/brazil/uf/${state}`)
             .then((res) => {
                 const data = res.data;
                 setCovidData(data);
                 setCovidError(false);
-                setLoading(false)
+                setCovidLoading(false)
             })
             .catch(() => setCovidError(true))
     }
 
+    function handleNewsReload () {
+        setNewsLoading(true)
+        axios.get(NEWS_URL(country))
+            .then((res) => {
+                const data = res.data;
+                setNewsData(data);
+                setNewsError(false);
+                setNewsLoading(false)
+            })
+            .catch(() => setNewsError(true))
+    }
+
     useEffect(() => {
-        setLoading(true);
+        setCovidLoading(true);
         axios.get(`https://covid19-brazil-api.now.sh/api/report/v1/brazil/uf/${state}`)
             .then((res) => {
                 const data = res.data;
                 setCovidData(data);
+                setCovidLoading(false);
             })
-            .catch(() => setCovidError(true)    )
-        axios.get(NEWS_URL(country))
+            .catch(() => {
+                setCovidLoading(false)
+                setCovidError(true)}    )
+        
+            axios.get(NEWS_URL(country))
             .then((res) => {
                 const data = res.data;
                 setNewsData(data)
+                setNewsLoading(false);
             })
-            .then(() => setLoading(false))
+            .catch(() => {
+                setNewsLoading(false)
+                setNewsError(true)
+            })
+        
     },[])
 
     return (
         <div className='cardsContainer'>
             <div className="covidInfoContainer card">
 
-                {loading ? 'Loading...' : (
+                {covidLoading ? <img src={loadingSpinner}/> : (
                     <>
                     <div className="selectRegion">
                         <h2 className="confirmedCasesTitle">Confirmed cases</h2>
@@ -150,7 +174,7 @@ export default function Cards() {
                 </div>
             </div>
             <div className="newsContainer card">
-            {loading ? 'Loading...' : (
+            {newsLoading ? <div className="loadingContainer"><img src={loadingSpinner}/></div> : (
                     <>
                     <div className="selectRegion">
                     <h2>Top posts</h2>
@@ -161,11 +185,19 @@ export default function Cards() {
                     </select>
                     </div>
                 </div>
+                {newsError ? (
+                    <div className="errorContainer">
+                        <h1>Request failed!</h1>
+                        <button type="button" onClick={handleNewsReload}>Reload!</button>
+                    </div>
+                ) : (
                 <div className="numberOfNews">
                     <ul>
                         {returnNews()}
                     </ul>   
                 </div>
+                )}
+                
                 </>
                 )}
                 <div className="contact">

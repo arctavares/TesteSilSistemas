@@ -123,6 +123,13 @@
     width: 20vw;
 }
 
+.loadingContainer {
+    height: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 @media (max-width: 833px){
     .cardsContainer {
         flex-direction: column;
