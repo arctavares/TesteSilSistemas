@@ -9,6 +9,7 @@ export default function Cards() {
     const [state, setState] = useState('RJ');
     const [country, setCountry] = useState('BR');
     const [newsData, setNewsData] = useState({articles: []});
+    const [covidError, setCovidError] = useState(false);
 
     const NEWS_API_KEY = '59f7bcd85f2c4ff7a912594ae830d2a2'; 
     // a key ficará aqui para que todos possam acessar
@@ -63,6 +64,7 @@ export default function Cards() {
                 const data = res.data;
                 setCovidData(data);
             })
+            .catch(() => setCovidError(true))
             .then(() => setLoading(false))
     }
 
@@ -86,6 +88,18 @@ export default function Cards() {
 
     }
 
+    function handleCovidReload () {
+        setLoading(true)
+        axios.get(`https://covid19-brazil-api.now.sh/api/report/v1/brazil/uf/${state}`)
+            .then((res) => {
+                const data = res.data;
+                setCovidData(data);
+                setCovidError(false);
+                setLoading(false)
+            })
+            .catch(() => setCovidError(true))
+    }
+
     useEffect(() => {
         setLoading(true);
         axios.get(`https://covid19-brazil-api.now.sh/api/report/v1/brazil/uf/${state}`)
@@ -93,6 +107,7 @@ export default function Cards() {
                 const data = res.data;
                 setCovidData(data);
             })
+            .catch(() => setCovidError(true)    )
         axios.get(NEWS_URL(country))
             .then((res) => {
                 const data = res.data;
@@ -104,6 +119,7 @@ export default function Cards() {
     return (
         <div className='cardsContainer'>
             <div className="covidInfoContainer card">
+
                 {loading ? 'Loading...' : (
                     <>
                     <div className="selectRegion">
@@ -111,12 +127,24 @@ export default function Cards() {
                         <select onChange={handleUfCHange} value={state}>
                             {returnAllUF()}
                         </select>
-                </div>
+                        </div>
+                    {covidError ? (
+                        <div className="errorContainer">
+                            <h1>Request failed!</h1>
+                            <button type="button" onClick={handleCovidReload}>Reload!</button>
+                        </div>
+                    ) : (
+                        <>
+                        
                 <div className="numberOfCases">
                     <h2 className="numberOfInfecteds">{covidData.cases}</h2>
                 </div>
-                </>
+                        </>
+                    )}
+                    
+                    </>
                 )}
+
                 <div className="infoAboutCases">
                     <a href="https://www.cdc.gov/coronavirus/2019-ncov/prevent-getting-sick/prevention.html#:~:text=In%20those%20situations%2C%20use%20as,sick%20or%20who%20tested%20positive.">Learn how to prevent infections</a>
                 </div>

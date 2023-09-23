@@ -6,6 +6,10 @@
 
 .covidInfoContainer {
     width: 25vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .card {
@@ -21,6 +25,7 @@
     display: flex;
     justify-content: space-around;
     margin-top: 2vh;
+    width: 100%;
 }
 
 .numberOfCases {
@@ -99,6 +104,23 @@
 
 .reviewText {
     height: 15vh;
+}
+
+.errorContainer {
+    width: 90%;
+    height: 50%;
+    border: 1px solid black;
+    margin: 20px;
+    margin-top: 0px !important;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(252, 178, 178);
+    justify-content: center;
+    align-items: center;
+}
+
+.errorContainer button {
+    width: 20vw;
 }
 
 @media (max-width: 833px){
