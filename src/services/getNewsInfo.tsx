@@ -5,15 +5,18 @@ const NEWS_URL = (country : string) => `https://newsapi.org/v2/top-headlines?cou
 
 export default function getNewsInfo (
     country: string,
-    setNewsData: Function,
-    setNewsLoading: Function,
-    setNewsError: Function
+    setNewsData: React.Dispatch<React.SetStateAction<{
+        articles: never[];
+    }>>,
+    setNewsLoading: React.Dispatch<React.SetStateAction<boolean>>,
+    setNewsError: React.Dispatch<React.SetStateAction<boolean>>
     ) {
     return (
         axios.get(NEWS_URL(country))
             .then((res) => {
                 const data = res.data;
                 setNewsData(data)
+                console.log(data);
                 setNewsLoading(false);
             })
             .catch(() => {

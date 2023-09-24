@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import "./Cards.css";
-import loadingSpinner from '../../icons/1494.gif';
 import getCovidData from "../../services/getCovidInfo";
 import getNewsInfo from "../../services/getNewsInfo";
+import Card from '../Card';
 
 export default function Cards() {
 
@@ -22,42 +22,12 @@ export default function Cards() {
     }
 
     const allUF = [
-            'AC',
-            'AL' ,
-            'AP' ,
-            'AM' ,
-            'BA' ,
-            'CE' ,
-            'DF' ,
-            'ES' ,
-            'GO' ,
-            'MA' ,
-            'MT' ,
-            'MS' ,
-            'MG' ,
-            'PA' ,
-            'PB' ,
-            'PR' ,
-            'PE' ,
-            'PI' ,
-            'RJ' ,
-            'RN' ,
-            'RS' ,
-            'RO' ,
-            'RR' ,
-            'SC' ,
-            'SP' ,
-            'SE' ,
-            'TO'
-    ]
+        'AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA',
+        'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN',
+        'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'
+    ];
 
-    function returnAllUF () {
-        return allUF.map(uf => {
-            return <option key={uf}>{uf}</option>
-        })
-    }
-
-    function handleUfCHange (e:React.ChangeEvent<HTMLSelectElement>) {
+    function handleUfChange (e:React.ChangeEvent<HTMLSelectElement>) {
         setState(e.target.value);
         setCovidLoading(true);
         getCovidData(e.target.value, setCovidData, setCovidError, setCovidLoading)
@@ -66,7 +36,7 @@ export default function Cards() {
     function handleContryChange(e:React.ChangeEvent<HTMLSelectElement>) {
         setCountry(e.target.value);
         setNewsLoading(true);
-        getNewsInfo(country, setNewsData, setNewsLoading, setNewsError);
+        getNewsInfo(e.target.value, setNewsData, setNewsLoading, setNewsError);
     }
 
     function returnNews () {
@@ -98,65 +68,48 @@ export default function Cards() {
         <div className='cardsContainer'>
             <div className="covidInfoContainer card">
 
-                {covidLoading ? <img src={loadingSpinner}/> : (
-                    <>
-                    <div className="selectRegion">
-                        <h2 className="confirmedCasesTitle">Confirmed cases</h2>
-                        <select onChange={handleUfCHange} value={state}>
-                            {returnAllUF()}
-                        </select>
-                        </div>
-                    {covidError ? (
-                        <div className="errorContainer">
-                            <h1>Request failed!</h1>
-                            <button type="button" onClick={handleCovidReload}>Reload!</button>
-                        </div>
-                    ) : (
-                        <>
-                        
+                <Card
+                    title={'Confirmed cases'}
+                    loading={covidLoading}
+                    error={covidError}
+                    onReload={handleCovidReload}
+                    handleChange={handleUfChange}
+                    defaultValue={state}
+                    options={allUF}
+                >
+
                 <div className="numberOfCases">
                     <h2 className="numberOfInfecteds">{covidData.cases}</h2>
                 </div>
-                        </>
-                    )}
-                    
-                    </>
-                )}
 
                 <div className="infoAboutCases">
                     <a href="https://www.cdc.gov/coronavirus/2019-ncov/prevent-getting-sick/prevention.html#:~:text=In%20those%20situations%2C%20use%20as,sick%20or%20who%20tested%20positive.">Learn how to prevent infections</a>
                 </div>
+
+                </Card>
+
+               
             </div>
             <div className="newsContainer card">
-            {newsLoading ? <div className="loadingContainer"><img src={loadingSpinner}/></div> : (
-                    <>
-                    <div className="selectRegion">
-                    <h2>Top posts</h2>
-                    <div className="newsContainer">
-                    <select onChange={(e) => handleContryChange(e)} value={country}>
-                        <option value='BR'>BR</option>
-                        <option value='US'>US</option>
-                    </select>
-                    </div>
-                </div>
-                {newsError ? (
-                    <div className="errorContainer">
-                        <h1>Request failed!</h1>
-                        <button type="button" onClick={handleNewsReload}>Reload!</button>
-                    </div>
-                ) : (
-                <div className="numberOfNews">
-                    <ul>
-                        {returnNews()}
-                    </ul>   
-                </div>
-                )}
                 
-                </>
-                )}
-                <div className="contact">
-                   <p>Do you want more visits? Contact us!</p>
-                </div>
+                <Card
+                    title="Top posts"
+                    loading={newsLoading}
+                    error={newsError}
+                    onReload={handleNewsReload}
+                    handleChange={handleContryChange}
+                    defaultValue={country}
+                    options={["BR","US"]}
+                    >
+                    <div className="numberOfNews">
+                        <ul>
+                        {returnNews()}
+                        </ul>
+                    </div>
+                    <div className="contact">
+                        <p>Do you want more visits? Contact us!</p>
+                    </div>
+                </Card>
             </div>
             <div className="reviewContainer card">
                 <h1>Trustpilot</h1>
