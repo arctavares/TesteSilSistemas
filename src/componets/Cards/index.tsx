@@ -66,7 +66,6 @@ export default function Cards() {
 
     return (
         <div className='cardsContainer'>
-            <div className="covidInfoContainer card">
 
                 <Card
                     title={'Confirmed cases'}
@@ -87,10 +86,6 @@ export default function Cards() {
                 </div>
 
                 </Card>
-
-               
-            </div>
-            <div className="newsContainer card">
                 
                 <Card
                     title="Top posts"
@@ -110,7 +105,7 @@ export default function Cards() {
                         <p>Do you want more visits? Contact us!</p>
                     </div>
                 </Card>
-            </div>
+                
             <div className="reviewContainer card">
                 <h1>Trustpilot</h1>
                 <p className="reviewText">Show us your love by leaving a <span className="highlight">positive</span> review on trust pilot and recieve the extension of 50 additional products</p>
