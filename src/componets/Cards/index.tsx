@@ -55,7 +55,7 @@ export default function Cards() {
 
     function handleNewsReload () {
         setNewsLoading(true)
-        getCovidData(state, setCovidData, setCovidError, setCovidLoading)
+        getNewsInfo(country, setNewsData, setNewsLoading, setNewsError);
     }
 
     useEffect(() => {
@@ -105,7 +105,7 @@ export default function Cards() {
                         <p>Do you want more visits? Contact us!</p>
                     </div>
                 </Card>
-                
+
             <div className="reviewContainer card">
                 <h1>Trustpilot</h1>
                 <p className="reviewText">Show us your love by leaving a <span className="highlight">positive</span> review on trust pilot and recieve the extension of 50 additional products</p>
