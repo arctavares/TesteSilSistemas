@@ -1,7 +1,7 @@
 .cardsContainer {
     margin-top: -5vh;
     display: flex;
-    justify-content: space-around;                                                                                                                                                          
+    justify-content: space-around;                                                                                                                                                      
 }
 
 .covidInfoContainer {
@@ -19,6 +19,7 @@
     border-radius: 10px;
     box-shadow: 1px 1px 30px rgb(68, 66, 66);
     overflow: hidden;
+    max-width: 500px;
 }
 
 .selectRegion {
